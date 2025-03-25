@@ -17,7 +17,7 @@ public class VictoryBPLibrary : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-				"VictoryBPLibrary/Public"
+				
 				
 				// ... add public include paths required here ...
 			}
@@ -26,7 +26,7 @@ public class VictoryBPLibrary : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 			new string[] {
-				"VictoryBPLibrary/Private",
+				
 				
 				// ... add other private include paths required here ...
 			}
@@ -59,8 +59,6 @@ public class VictoryBPLibrary : ModuleRules
 				"ImageWrapper",
 
                 "PhysicsCore", 
-				"PhysX", 
-				
 				"HeadMountedDisplay",
   
                 "AIModule",
@@ -83,7 +81,7 @@ public class VictoryBPLibrary : ModuleRules
 			PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"APEX"
+
 			}
 			);
 			
