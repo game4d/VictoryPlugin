@@ -2065,26 +2065,26 @@ bool UVictoryBPFunctionLibrary::GetStaticMeshVertexLocations(UStaticMeshComponen
 		return false;
 	}  
 	
-	for(PxTriangleMesh* EachTriMesh : BodySetup->TriMeshes)
-	{
-		if (!EachTriMesh)
-		{
-			return false;
-		}
-		//~~~~~~~~~~~~~~~~
+	//for(PxTriangleMesh* EachTriMesh : BodySetup->TriMeshes)
+	//{
+	//	if (!EachTriMesh)
+	//	{
+	//		return false;
+	//	}
+	//	//~~~~~~~~~~~~~~~~
 
-		//Number of vertices
-		PxU32 VertexCount = EachTriMesh->getNbVertices();
+	//	//Number of vertices
+	//	PxU32 VertexCount = EachTriMesh->getNbVertices();
 
-		//Vertex array
-		const PxVec3* Vertices = EachTriMesh->getVertices();
+	//	//Vertex array
+	//	const PxVec3* Vertices = EachTriMesh->getVertices();
 
-		//For each vertex, transform the position to match the component Transform 
-		for (PxU32 v = 0; v < VertexCount; v++)
-		{
-			VertexPositions.Add(RV_Transform.TransformPosition(P2UVector(Vertices[v])));
-		}
-	}
+	//	//For each vertex, transform the position to match the component Transform 
+	//	for (PxU32 v = 0; v < VertexCount; v++)
+	//	{
+	//		VertexPositions.Add(RV_Transform.TransformPosition(P2UVector(Vertices[v])));
+	//	}
+	//}
 	return true;
 	
 	/*
@@ -2382,13 +2382,13 @@ void UVictoryBPFunctionLibrary::OperatingSystem__GetCurrentPlatform(
 	Mac = 						PLATFORM_MAC;
 	Linux = 					PLATFORM_LINUX;
 	
-	PS4 = 						PLATFORM_PS4;
-	XBoxOne = 				PLATFORM_XBOXONE;
+	//PS4 = 						PLATFORM_PS4;
+	//XBoxOne = 				PLATFORM_XBOXONE;
 	
 	iOS = 						PLATFORM_IOS;
 	Android = 				PLATFORM_ANDROID;
 	Android_ARM  	=		PLATFORM_ANDROID_ARM;
-	Android_Vulkan	= 		PLATFORM_ANDROID_VULKAN;
+	//Android_Vulkan	= 		PLATFORM_ANDROID_VULKAN;
 	HTML5 = false;//PLATFORM_HTML5;
 	 
 	Apple =	 			PLATFORM_APPLE;
@@ -4187,9 +4187,9 @@ UTexture2D* UVictoryBPFunctionLibrary::LoadTexture2D_FromDDSFile(const FString& 
 				}
 
 				/* Write to existing mip */
-				if( i < Texture->PlatformData->Mips.Num( ) )
+				if( i < Texture->GetPlatformData()->Mips.Num( ) )
 				{
-					FTexture2DMipMap& Mip = Texture->PlatformData->Mips[ i ];
+					FTexture2DMipMap& Mip = Texture->GetPlatformData()->Mips[ i ];
 
 					void* Data = Mip.BulkData.Lock( LOCK_READ_WRITE );
 					FMemory::Memcpy( Data, DataPtr, NumBytes );
@@ -4199,7 +4199,7 @@ UTexture2D* UVictoryBPFunctionLibrary::LoadTexture2D_FromDDSFile(const FString& 
 				/* Add new mip */
 				else
 				{
-					FTexture2DMipMap* Mip = new( Texture->PlatformData->Mips ) FTexture2DMipMap( );
+					FTexture2DMipMap* Mip = new( Texture->GetPlatformData()->Mips ) FTexture2DMipMap( );
 					Mip->SizeX = CurrentWidth;
 					Mip->SizeY = CurrentHeight;
 
@@ -4319,9 +4319,9 @@ UTexture2D* UVictoryBPFunctionLibrary::Victory_LoadTexture2D_FromFile(const FStr
 			Height = ImageWrapper->GetHeight();
 			 
 			//Copy!
-			void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+			void* TextureData = LoadedT2D->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 			FMemory::Memcpy(TextureData, UncompressedBGRA.GetData(), UncompressedBGRA.Num());
-			LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
+			LoadedT2D->GetPlatformData()->Mips[0].BulkData.Unlock();
 
 			//Update!
 			LoadedT2D->UpdateResource();
@@ -4386,9 +4386,9 @@ UTexture2D* UVictoryBPFunctionLibrary::Victory_LoadTexture2D_FromFile_Pixels(con
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			   
 			//Copy!
-			void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+			void* TextureData = LoadedT2D->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 			FMemory::Memcpy(TextureData, UncompressedRGBA.GetData(), UncompressedRGBA.Num());
-			LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
+			LoadedT2D->GetPlatformData()->Mips[0].BulkData.Unlock();
 
 			//Update!
 			LoadedT2D->UpdateResource();
@@ -4558,7 +4558,7 @@ bool UVictoryBPFunctionLibrary::Victory_GetPixelFromT2D(UTexture2D* T2D, int32 X
 	//Update settings
 	T2D->UpdateResource();
 	 
-	FTexture2DMipMap& MipsMap 	= T2D->PlatformData->Mips[0];
+	FTexture2DMipMap& MipsMap 	= T2D->GetPlatformData()->Mips[0];
 	int32 TextureWidth = MipsMap.SizeX;
 	int32 TextureHeight = MipsMap.SizeY;
 	 
@@ -4644,7 +4644,7 @@ bool UVictoryBPFunctionLibrary::Victory_GetPixelsArrayFromT2D(UTexture2D* T2D, i
 	//Update settings
 	T2D->UpdateResource();
 	 
-	FTexture2DMipMap& MyMipMap 	= T2D->PlatformData->Mips[0];
+	FTexture2DMipMap& MyMipMap 	= T2D->GetPlatformData()->Mips[0];
 	TextureWidth = MyMipMap.SizeX;
 	TextureHeight = MyMipMap.SizeY;
 	 
@@ -4756,7 +4756,7 @@ void UVictoryBPFunctionLibrary::PlaySoundAtLocationFromFile(UObject* WorldContex
 
 class USoundWave* UVictoryBPFunctionLibrary::GetSoundWaveFromFile(const FString& FilePath)
 {
-	#if PLATFORM_PS4
+	#if 0
 	UE_LOG(LogTemp, Error, TEXT("UVictoryBPFunctionLibrary::GetSoundWaveFromFile ~ vorbis-method not supported on PS4. See UVictoryBPFunctionLibrary::fillSoundWaveInfo"));
 	return nullptr;
 	#else
@@ -4775,7 +4775,7 @@ class USoundWave* UVictoryBPFunctionLibrary::GetSoundWaveFromFile(const FString&
 
 	if (loaded)
 	{
-		FByteBulkData* bulkData = &sw->CompressedFormatData.GetFormat(TEXT("OGG"));
+		FByteBulkData* bulkData = sw->GetCompressedData(TEXT("OGG"));
 
 		bulkData->Lock(LOCK_READ_WRITE);
 		FMemory::Memcpy(bulkData->Realloc(rawFile.Num()), rawFile.GetData(), rawFile.Num());
@@ -4791,7 +4791,7 @@ class USoundWave* UVictoryBPFunctionLibrary::GetSoundWaveFromFile(const FString&
 	#endif 
 }
 
-#if !PLATFORM_PS4
+
 int32 UVictoryBPFunctionLibrary::fillSoundWaveInfo(class USoundWave* sw, TArray<uint8>* rawFile)
 {
     FSoundQualityInfo info; 
@@ -4852,7 +4852,7 @@ int32 UVictoryBPFunctionLibrary::findSource(class USoundWave* sw, class FSoundSo
 	out_audioSource = audioSource;
 	return -2;
 }
-#endif //PLATFORM_PS4
+
  
 //~~~ Kris ~~~
  
@@ -5084,9 +5084,9 @@ UTexture2D* UVictoryBPFunctionLibrary::LoadTexture2D_FromFileByExtension(const F
 				OutWidth = ImageWrapper->GetWidth();
 				OutHeight = ImageWrapper->GetHeight();
 
-				void* TextureData = Texture->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+				void* TextureData = Texture->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 				FMemory::Memcpy(TextureData, UncompressedRGBA.GetData(), UncompressedRGBA.Num());
-				Texture->PlatformData->Mips[0].BulkData.Unlock();
+				Texture->GetPlatformData()->Mips[0].BulkData.Unlock();
 				Texture->UpdateResource();
 			}
 		}
@@ -5287,6 +5287,7 @@ FLevelStreamInstanceInfo UVictoryBPFunctionLibrary::GetLevelInstanceInfo(ULevelS
 	return FLevelStreamInstanceInfo(LevelInstance);
 }
 
+/*
 void UVictoryBPFunctionLibrary::AddToStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo)
 {
 	bool bResult = true;
@@ -5343,8 +5344,8 @@ void UVictoryBPFunctionLibrary::AddToStreamingLevels(UObject* WorldContextObject
 		}
 	}
 }
-
-
+*/
+/*
 void UVictoryBPFunctionLibrary::RemoveFromStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo)
 {
 
@@ -5401,37 +5402,37 @@ void UVictoryBPFunctionLibrary::RemoveFromStreamingLevels(UObject* WorldContextO
 		}
 	}
 }
-
+*/
 bool UVictoryBPFunctionLibrary::GenericArray_SortCompare(const FProperty* LeftProperty, void* LeftValuePtr, const FProperty* RightProperty, void* RightValuePtr)
 {
 	bool bResult = false;
 
-	if (const FNumericProperty *LeftNumericProperty = Cast<const FNumericProperty>(LeftProperty))
+	if (const FNumericProperty *LeftNumericProperty = CastField<const FNumericProperty>(LeftProperty))
 	{
 		if (LeftNumericProperty->IsFloatingPoint())
 		{
-			bResult = (LeftNumericProperty->GetFloatingPointPropertyValue(LeftValuePtr) < Cast<const FNumericProperty>(RightProperty)->GetFloatingPointPropertyValue(RightValuePtr));
+			bResult = (LeftNumericProperty->GetFloatingPointPropertyValue(LeftValuePtr) < CastField<const FNumericProperty>(RightProperty)->GetFloatingPointPropertyValue(RightValuePtr));
 		}
 		else if (LeftNumericProperty->IsInteger())
 		{
-			bResult = (LeftNumericProperty->GetSignedIntPropertyValue(LeftValuePtr) < Cast<const FNumericProperty>(RightProperty)->GetSignedIntPropertyValue(RightValuePtr));
+			bResult = (LeftNumericProperty->GetSignedIntPropertyValue(LeftValuePtr) < CastField<const FNumericProperty>(RightProperty)->GetSignedIntPropertyValue(RightValuePtr));
 		}
 	}
-	else if (const FBoolProperty* LeftBoolProperty = Cast<const FBoolProperty>(LeftProperty))
+	else if (const FBoolProperty* LeftBoolProperty = CastField<const FBoolProperty>(LeftProperty))
 	{
-		bResult = (!LeftBoolProperty->GetPropertyValue(LeftValuePtr) && Cast<const FBoolProperty>(RightProperty)->GetPropertyValue(RightValuePtr));
+		bResult = (!LeftBoolProperty->GetPropertyValue(LeftValuePtr) && CastField<const FBoolProperty>(RightProperty)->GetPropertyValue(RightValuePtr));
 	}
-	else if (const FNameProperty* LeftNameProperty = Cast<const FNameProperty>(LeftProperty))
+	else if (const FNameProperty* LeftNameProperty = CastField<const FNameProperty>(LeftProperty))
 	{
-		bResult = (LeftNameProperty->GetPropertyValue(LeftValuePtr).ToString() < Cast<const FNameProperty>(RightProperty)->GetPropertyValue(RightValuePtr).ToString());
+		bResult = (LeftNameProperty->GetPropertyValue(LeftValuePtr).ToString() < CastField<const FNameProperty>(RightProperty)->GetPropertyValue(RightValuePtr).ToString());
 	}
-	else if (const FStrProperty* LeftStringProperty = Cast<const FStrProperty>(LeftProperty))
+	else if (const FStrProperty* LeftStringProperty = CastField<const FStrProperty>(LeftProperty))
 	{
-		bResult = (LeftStringProperty->GetPropertyValue(LeftValuePtr) < Cast<const FStrProperty>(RightProperty)->GetPropertyValue(RightValuePtr));
+		bResult = (LeftStringProperty->GetPropertyValue(LeftValuePtr) < CastField<const FStrProperty>(RightProperty)->GetPropertyValue(RightValuePtr));
 	}
-	else if (const FTextProperty* LeftTextProperty = Cast<const FTextProperty>(LeftProperty))
+	else if (const FTextProperty* LeftTextProperty = CastField<const FTextProperty>(LeftProperty))
 	{
-		bResult = (LeftTextProperty->GetPropertyValue(LeftValuePtr).ToString() < Cast<const FTextProperty>(RightProperty)->GetPropertyValue(RightValuePtr).ToString());
+		bResult = (LeftTextProperty->GetPropertyValue(LeftValuePtr).ToString() < CastField<const FTextProperty>(RightProperty)->GetPropertyValue(RightValuePtr).ToString());
 	}
 
 	return bResult;
@@ -5444,7 +5445,7 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 		FScriptArrayHelper ArrayHelper(ArrayProp, TargetArray);
 		const int32 LastIndex = ArrayHelper.Num();
 
-		if (const FObjectProperty* ObjectProperty = Cast<const FObjectProperty>(ArrayProp->Inner))
+		if (const FObjectProperty* ObjectProperty = CastField<const FObjectProperty>(ArrayProp->Inner))
 		{
 			for (int32 i = 0; i < LastIndex; ++i)
 			{
@@ -5453,8 +5454,8 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 					UObject* LeftObject = ObjectProperty->GetObjectPropertyValue(ArrayHelper.GetRawPtr(j));
 					UObject* RightObject = ObjectProperty->GetObjectPropertyValue(ArrayHelper.GetRawPtr(j + 1));
 
-					FProperty* LeftProperty = FindField<FProperty>(LeftObject->GetClass(), VariableName);
-					FProperty* RightProperty = FindField<FProperty>(RightObject->GetClass(), VariableName);
+					FProperty* LeftProperty = FindFProperty<FProperty>(LeftObject->GetClass(), VariableName);
+					FProperty* RightProperty = FindFProperty<FProperty>(RightObject->GetClass(), VariableName);
 						
 					if (LeftProperty && RightProperty)
 					{
@@ -5473,9 +5474,9 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 		{
 			FProperty* Property = nullptr;
 
-			if (const FStructProperty* StructProperty = Cast<const FStructProperty>(ArrayProp->Inner))
+			if (const FStructProperty* StructProperty = CastField<const FStructProperty>(ArrayProp->Inner))
 			{
-				Property = FindField<FProperty>(StructProperty->Struct, VariableName);
+				Property = FindFProperty<FProperty>(StructProperty->Struct, VariableName);
 			}
 			else
 			{
