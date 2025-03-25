@@ -1619,7 +1619,7 @@ class VICTORYBPLIBRARY_API UVictoryBPFunctionLibrary : public UBlueprintFunction
 	UFUNCTION(BlueprintCallable, Category = "Victory BP Library|Sound")
 	static class USoundWave* GetSoundWaveFromFile(const FString& FilePath);
 
-#if !PLATFORM_PS4
+
 private:
 	// Thanks to @keru for the base code for loading an Ogg into a USoundWave:
 	// https://forums.unrealengine.com/showthread.php?7936-Custom-Music-Player&p=97659&viewfull=1#post97659
@@ -1643,7 +1643,7 @@ private:
         *        -2 if error: sound wave not found
         */
 		static int32 findSource(class USoundWave* sw, class FSoundSource* out_audioSource);
-#endif //PLATFORM_PS4
+
 
 
 
@@ -1777,7 +1777,7 @@ static void SetBloomIntensity(APostProcessVolume* PostProcessVolume,float Intens
 		Stack.MostRecentProperty = nullptr;
 		Stack.StepCompiledIn<FArrayProperty>(NULL);
 		void* ArrayAddr = Stack.MostRecentPropertyAddress;
-		FArrayProperty* ArrayProperty = Cast<FArrayProperty>(Stack.MostRecentProperty);
+		FArrayProperty* ArrayProperty = CastField<FArrayProperty>(Stack.MostRecentProperty);
 		if (!ArrayProperty)
 		{
 			Stack.bArrayContextFailed = true;
@@ -1855,11 +1855,11 @@ static void SetBloomIntensity(APostProcessVolume* PostProcessVolume,float Intens
 	UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable)
 	static FLevelStreamInstanceInfo GetLevelInstanceInfo(ULevelStreamingDynamic* LevelInstance);
 
-	UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable, Meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
-	static void AddToStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo);
+	//UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable, Meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
+	//static void AddToStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo);
 
-	UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable, Meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
-	static void RemoveFromStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo);
+	//UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable, Meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject"))
+	//static void RemoveFromStreamingLevels(UObject* WorldContextObject, const FLevelStreamInstanceInfo& LevelInstanceInfo);
 
 	UFUNCTION(Category = "Victory BP Library|LevelStreaming", BlueprintCallable, Meta = (keywords="remove"))
 	static void HideStreamingLevel(ULevelStreamingDynamic* LevelInstance)
@@ -1893,7 +1893,7 @@ static void SetBloomIntensity(APostProcessVolume* PostProcessVolume,float Intens
 		Stack.MostRecentProperty = nullptr;
 		Stack.StepCompiledIn<FArrayProperty>(NULL);
 		void* ArrayAddr = Stack.MostRecentPropertyAddress;
-		FArrayProperty* ArrayProperty = Cast<FArrayProperty>(Stack.MostRecentProperty);
+		FArrayProperty* ArrayProperty = CastField<FArrayProperty>(Stack.MostRecentProperty);
 		if (!ArrayProperty)
 		{
 			Stack.bArrayContextFailed = true;
