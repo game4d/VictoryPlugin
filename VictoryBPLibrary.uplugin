@@ -1,35 +1,29 @@
 {
-	"FileVersion" : 3,
-	"Version" : 1,
-	"VersionName" : "1.0",
-	"FriendlyName" : "Victory Plugin",
-	"Description" : "120+ Custom Blueprint Nodes For You! <3 Rama",
-	"Category" : "Rama",
-	"CreatedBy" : "Rama",
-	"CreatedByURL" : "http://www.ue4code.com",
-	"DocsURL" : "http://www.ue4code.com",
-	"MarketplaceURL" : "http://www.ue4code.com",
-	"SupportURL" : "http://www.ue4code.com",
-	"EnabledByDefault" : true,
-	"CanContainContent" : false,
-	"IsBetaVersion" : false,
-	"Installed" : true,
-	"RequiresBuildPlatform" : false,
-	"Modules" :
-	[
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Victory Plugin",
+	"Description": "120+ Custom Blueprint Nodes For You! <3 Rama",
+	"Category": "Rama",
+	"CreatedBy": "Rama",
+	"CreatedByURL": "http://www.ue4code.com",
+	"DocsURL": "http://www.ue4code.com",
+	"MarketplaceURL": "http://www.ue4code.com",
+	"SupportURL": "http://www.ue4code.com",
+	"EngineVersion": "5.1.0",
+	"CanContainContent": false,
+	"Installed": true,
+	"Modules": [
 		{
-			"Name" : "VictoryBPLibrary",
-			"Type" : "Runtime",
-			"LoadingPhase" : "PreDefault",
-			"WhitelistPlatforms" :
-			[
-				"Win64",
-				"Win32",
+			"Name": "VictoryBPLibrary",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"PlatformAllowList": [
+				"Win64"
 			]
 		}
 	],
-	"Plugins" :
-	[
+	"Plugins": [
 		{
 			"Name": "ApexDestruction",
 			"Enabled": true
